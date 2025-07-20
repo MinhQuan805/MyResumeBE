@@ -18,6 +18,7 @@ export class ArticleController {
               @Query('sortValue') sortValue: string) {
     return this.articleService.index(keyword, status, page, sortKey, sortValue);
   }
+  
   @Post('/create')
   async create(@Body() createArticleDto: CreateArticleDto, 
               @Body('position') position: string,
@@ -35,6 +36,7 @@ export class ArticleController {
     return this.articleService.detail(id);
   }
 
+  @Public()
   @Delete('/deleteSoft/:id')
   async delete(@Param('id') id: string) : Promise<{ success: boolean, message: string }> {
     return this.articleService.deleteSoft(id);

@@ -4,10 +4,12 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from '../../schemas/product.schema';
 import { ProductService } from './product.service';
 import { prefixAdmin, prefixApi } from '../../../config/system';
-@Controller(prefixApi + prefixAdmin + '/product')
+import { Public } from 'src/modules/decorator/customize';
+@Controller(prefixApi + '/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Public()
   @Get()
   async index(@Query('keyword') keyword: string,
               @Query('status') status: string,
@@ -16,6 +18,7 @@ export class ProductController {
               @Query('sortValue') sortValue: string) {
     return this.productService.index(keyword, status, page, sortKey, sortValue);
   }
+
   @Post('/create')
   async create(@Body() createProductDto: CreateProductDto, 
               @Body('position') position: string,
