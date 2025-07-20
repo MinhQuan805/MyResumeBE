@@ -56,4 +56,46 @@ export class ProductService {
         }
         return { success: false, message: "Xóa vĩnh viễn không thành công"};                            
     }
+
+    // PHẦN THAO TÁC XÓA VÀ KHÔI PHỤC
+    
+    async getAllDeleted(keyword: string, status: string, page: number, sortKey: string, sortValue: string) {
+        return findAll(this.productModel, {
+            keyword,
+            page,
+            sortKey,
+            sortValue,
+            deleted: true,
+            status: status
+        });
+    }
+
+    // Xóa mềm
+    async deleteSoft(id: string): Promise<{ success: boolean, message: string }> {
+        const deleteSoft = await this.productModel.updateOne({ _id: id }, 
+                                                                { deleted: true, deletedAt: new Date(),})
+        if (deleteSoft) {
+            return { success: true, message: "Xóa thành công" };
+        }
+        return { success: false, message: "Xóa không thành công"};                            
+    }
+
+    // Xóa vĩnh viễn
+    async deleteHard(): Promise<{ success: boolean, message: string }> {
+        const deleteHard = await this.productModel.deleteMany({ deleted: true });
+        if (deleteHard) {
+            return { success: true, message: "Xóa vĩnh viễn thành công" };
+        }
+        return { success: false, message: "Xóa vĩnh viễn không thành công"};                            
+    }
+
+    // Phục hồi sản phẩm
+    async recovery(id: string): Promise<{ success: boolean, message: string }> {
+        const recovery = await this.productModel.updateOne({ _id: id }, 
+                                                                { deleted: false});
+        if (recovery) {
+            return { success: true, message: "Phục hồi thành công" };
+        }
+        return { success: false, message: "Phục hồi thất bại"};                            
+    }
 }
