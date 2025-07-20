@@ -31,6 +31,7 @@ export class ArticleController {
     return this.articleService.update(id, updateArticleDto);
   }
 
+  @Public()
   @Get('/detail/:id')
   async detail(@Param('id') id: string): Promise<Article> {
     return this.articleService.detail(id);

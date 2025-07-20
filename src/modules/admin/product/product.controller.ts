@@ -36,30 +36,6 @@ export class ProductController {
     return this.productService.detail(id);
   }
 
-  @Public()
-  @Delete('/deleteSoft/:id')
-  async deleteSoft(@Param('id') id: string) : Promise<{ success: boolean, message: string }> {
-    return this.productService.deleteSoft(id);
-  }
-
-  @Delete('/deleteHard')
-  async deleteHard() : Promise<{ success: boolean, message: string }> {
-    return this.productService.deleteHard();
-  }
-
-  @Get('/deleted')
-  async getAllDeleted(@Query('keyword') keyword: string, 
-                      @Query('status') status: string,
-                      @Query('page') page: number, 
-                      @Query('sortKey') sortKey: string, 
-                      @Query('sortValue') sortValue: string) {
-    return this.productService.getAllDeleted(keyword, status, page, sortKey, sortValue);
-  }
-
-  @Patch('/recovery/:id')
-  async recovery(@Param('id') id: string) : Promise<{ success: boolean, message: string }> {
-    return this.productService.recovery(id);
-  }
 
   @Delete('/delete')
   async delete() : Promise<{ success: boolean, message: string }> {
