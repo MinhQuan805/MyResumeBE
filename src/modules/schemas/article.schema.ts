@@ -11,32 +11,24 @@ export class Article {
   title: string;
 
   @Prop({default: ""})
-  thumnail: string;
+  thumbnail: string;
 
   @Prop()
   position: number;
 
-  @Prop({default: "hidden"})
+  @Prop({default: "ongoing"})
   status: string;
 
   @Prop()
   introduction: string;
 
-
   @Prop()
-  content: {
-    index: number;
-    title: string;
-    content: string;
-  }[];
-
-  @Prop()
-  author: string;
+  content: string;
 
   @Prop()
   tags: string[];
 
-  @Prop()
+  @Prop({default: 0})
   views: number;
 
   @Prop({default: false})

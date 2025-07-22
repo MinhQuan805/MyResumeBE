@@ -5,23 +5,28 @@ import { Article } from '../../schemas/article.schema';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { findAll } from '../../../utils/findAll';
-
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 @Injectable()
 export class ArticleService {
-    constructor(@InjectModel(Article.name) private articleModel: Model<Article>) {}
+    constructor(@InjectModel(Article.name) private articleModel: Model<Article>,
+                private readonly cloudinaryService: CloudinaryService
+    ) {}
 
-    async index(keyword: string, status: string, page: number, sortKey: string, sortValue: string) {
+    async index(keyword: string, status: string, deleted: string, page: number, sortKey: string, sortValue: string) {
         return findAll(this.articleModel, {
             keyword,
             page,
             sortKey,
             sortValue,
-            deleted: false,
-            status: status
+            status: status,
+            deleted: deleted === 'true' ? true : false
         });
     }
-
-    async create(createArticleDto: CreateArticleDto, position: string): Promise<Article> {
+    async upload(file: Express.Multer.File) {
+        const result = await this.cloudinaryService.uploadFile(file);
+        return { url: result.secure_url };
+    }
+    async create(createArticleDto: CreateArticleDto, position: string): Promise<{ success: boolean, message: string }> {
         if (!position || position === "") {
             const position = await this.articleModel.countDocuments({});
             createArticleDto.position = position + 1;
@@ -30,7 +35,11 @@ export class ArticleService {
             createArticleDto.position = parseInt(position);
         }
         const createdArticle = new this.articleModel(createArticleDto);
-        return createdArticle.save();
+        createdArticle.save();
+        if (createdArticle) {
+            return { success: true, message: "Tạo bài báo thành công" };
+        }
+        return { success: false, message: "Tạo bài báo thất bại"};
     }
 
     async update(id: string, updateArticleDto: UpdateArticleDto): Promise<{ success: boolean, message: string }> {
@@ -50,17 +59,6 @@ export class ArticleService {
     }
     
     // PHẦN THAO TÁC XÓA VÀ KHÔI PHỤC
-    
-    async getAllDeleted(keyword: string, status: string, page: number, sortKey: string, sortValue: string) {
-        return findAll(this.articleModel, {
-            keyword,
-            page,
-            sortKey,
-            sortValue,
-            deleted: true,
-            status: status
-        });
-    }
 
     // Xóa mềm
     async deleteSoft(id: string): Promise<{ success: boolean, message: string }> {
@@ -73,8 +71,8 @@ export class ArticleService {
     }
 
     // Xóa vĩnh viễn
-    async deleteHard(): Promise<{ success: boolean, message: string }> {
-        const deleteHard = await this.articleModel.deleteMany({ deleted: true });
+    async deleteHard(id: string): Promise<{ success: boolean, message: string }> {
+        const deleteHard = await this.articleModel.deleteOne({ _id: id });
         if (deleteHard) {
             return { success: true, message: "Xóa vĩnh viễn thành công" };
         }
@@ -84,7 +82,7 @@ export class ArticleService {
     // Phục hồi bài báo
     async recovery(id: string): Promise<{ success: boolean, message: string }> {
         const recovery = await this.articleModel.updateOne({ _id: id }, 
-                                                                { deleted: false});
+                                                            { deleted: false, deletedAt: null});
         if (recovery) {
             return { success: true, message: "Phục hồi thành công" };
         }

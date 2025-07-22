@@ -9,7 +9,6 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173',
-      'http://localhost:3000',
       'https://vmq-resume.vercel.app',
     ],
     credentials: true,
@@ -20,6 +19,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
   app.useGlobalPipes(new ValidationPipe({
+    transform: true,
     whitelist: true,
   }));
   await app.listen(port);

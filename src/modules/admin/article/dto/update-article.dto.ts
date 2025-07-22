@@ -6,7 +6,7 @@ export class UpdateArticleDto {
   title: string;
 
   category_id: string;
-  thumnail: string;
+  thumbnail: string;
 
   @IsNumber()
   position: number;
@@ -16,21 +16,11 @@ export class UpdateArticleDto {
   @IsString()
   introduction: string;
 
-  @IsArray()
-  @IsNotEmpty()
-  content: {
-    index: number;
-    title: string;
-    content: string;
-  }[];
-
-
   @IsString()
-  @IsNotEmpty()
-  author: string;
+  content: string;
 
-  @IsArray()
-  @IsNotEmpty()
+  // @IsArray()
+  // @IsNotEmpty()
   tags: string[];
 
   outstand: boolean;

@@ -1,40 +1,46 @@
-import { IsString, IsNotEmpty, IsArray, IsNumber, IsBoolean } from 'class-validator';
+import { IsString, IsNotEmpty, IsBoolean, IsDate, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateArticleDto {
   @IsString()
   @IsNotEmpty()
   title: string;
 
+
   category_id: string;
-  thumnail: string;
+  @IsString()
+  @IsOptional()
+  thumbnail: string;
+
   position: number;
 
+  @IsString()
+  @IsOptional()
   status: string;
   
   @IsString()
+  @IsOptional()
   introduction: string;
 
-  @IsArray()
-  @IsNotEmpty()
-  content: {
-    index: number;
-    title: string;
-    content: string;
-  }[];
-
-
   @IsString()
-  @IsNotEmpty()
-  author: string;
+  @IsOptional()
+  content: string;
 
-  @IsArray()
-  @IsNotEmpty()
-  tags: string[];
 
+  // @IsArray()
+  // @IsNotEmpty()
+  // tags: string[];
+  @IsBoolean()
+  @IsOptional()
   outstand: boolean;
+
   deleted: boolean;
   slug: string;
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
   createdAt: Date;
+
   updatedAt: Date;
   deletedAt: Date;
 }

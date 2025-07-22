@@ -12,7 +12,6 @@ export interface SearchParams {
 
 export interface SearchResult<T> {
     data: T[];
-    totalPage: number;
     currentPage: number;
     totalItems: number;
 }
@@ -35,7 +34,6 @@ export async function findAll<T>(
     config: PaginationConfig = {}
 ): Promise<SearchResult<T>> {
     const { keyword, status, page, sortKey, sortValue, deleted } = params;
-    const { limitItem = 10 } = config;
     
     // Tạo điều kiện tìm kiếm
     const find: { title?: RegExp, deleted: boolean, status?: string } = {
@@ -64,19 +62,16 @@ export async function findAll<T>(
     // Tính toán phân trang
     const pagination = paginationHelper(totalItems, page);
     const skip = pagination.skip;
-    const totalPage = pagination.totalPage;
     const currentPage = pagination.currentPage;
 
     // Thực hiện query
     const data = await model.find(find)
-        .limit(limitItem)
         .sort(sort as any)
         .skip(skip);
         
     return {
         data: data as T[], 
-        totalPage, 
         currentPage, 
-        totalItems 
+        totalItems,
     };
 }

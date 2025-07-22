@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/passport/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { UserModule } from './modules/user/user.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [ 
@@ -29,7 +30,8 @@ import { UserModule } from './modules/user/user.module';
     ArticleModule,
     ProductModule,
     AuthModule,
-    UserModule
+    UserModule,
+    CloudinaryModule
   ],
   controllers: [AppController],
   providers: [AppService,
