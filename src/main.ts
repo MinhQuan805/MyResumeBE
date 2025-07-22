@@ -17,7 +17,7 @@ async function bootstrap() {
   });
 
   const configService = app.get(ConfigService);
-  const port = configService.get('PORT');
+  const port = configService.get('PORT') || process.env.PORT || 3000;
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
     whitelist: true,
