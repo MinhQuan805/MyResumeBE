@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import { prefixAdmin, prefixApi } from '../../config/system';
 import { Public } from '../decorator/customize';
 import { CreateAuthDto } from '../auth/dto/create-auth.dto';
-@Controller(prefixApi + '/user')
+@Controller(prefixApi + '/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
