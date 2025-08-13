@@ -8,7 +8,7 @@ import { Public } from 'src/modules/decorator/customize';
 // Upload image
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
-@Controller(prefixApi + prefixAdmin + '/article')
+@Controller(prefixApi + prefixAdmin + '/articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService,
               private readonly cloudinaryService: CloudinaryService
