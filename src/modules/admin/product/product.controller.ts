@@ -5,7 +5,7 @@ import { Product } from '../../schemas/product.schema';
 import { ProductService } from './product.service';
 import { prefixAdmin, prefixApi } from '../../../config/system';
 import { Public } from 'src/modules/decorator/customize';
-@Controller(prefixApi + '/product')
+@Controller(prefixApi + prefixAdmin + '/products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 

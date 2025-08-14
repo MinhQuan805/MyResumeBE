@@ -19,12 +19,12 @@ export class UserController {
       return this.userService.index(keyword, status, page, sortKey, sortValue);
   }
 
-  @Post('/create')
-  async create(@Body() createUserDto: CreateUserDto, 
-             ): Promise<{ success: boolean, message: string }> {
-    return this.userService.create(createUserDto);
+  @Public()
+  @Post('/register')
+  async register(@Body() registerUserDto: CreateAuthDto) {
+    return this.userService.handleRegister(registerUserDto);
   }
-
+  
   @Patch('/edit/:id')
   async update(@Body() updateUserDto: UpdateUserDto, @Param('id') id: string): Promise<{ success: boolean, message: string }> {
     return this.userService.update(id, updateUserDto);
@@ -41,10 +41,4 @@ export class UserController {
     return this.userService.deleteHard(id);
   }
 
-
-  @Public()
-  @Post('/register')
-  async register(@Body() registerUserDto: CreateAuthDto) {
-    return this.userService.handleRegister(registerUserDto);
-  }
 }

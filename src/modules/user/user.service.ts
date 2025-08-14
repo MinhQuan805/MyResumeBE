@@ -25,16 +25,6 @@ export class UserService {
         });
     }
 
-    async create(createUserDto: CreateUserDto): Promise<{ success: boolean, message: string }> {
-        createUserDto.password = await hashPasswordHelper(createUserDto.password);
-        const createdUser = new this.userModel(createUserDto);
-        createdUser.save();
-        if (createdUser) {
-            return { success: true, message: "Tạo tài khoản thành công" };
-        }
-        return { success: false, message: "Tạo tài khoản thất bại"};
-    }
-
     async update(id: string, updateUserDto: UpdateUserDto): Promise<{ success: boolean, message: string }> {
         const updatedUser = await this.userModel.updateOne({ _id: id }, {...updateUserDto, $push: { updatedAt: new Date()}});
         if (!updatedUser) {
