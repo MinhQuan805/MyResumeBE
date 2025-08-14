@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsArray, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsArray, IsOptional, IsDate, IsBoolean } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -9,10 +10,18 @@ export class CreateProductDto {
   @IsOptional()
   logo: string;
 
+  @IsOptional()
+  @IsString()
   thumbnail: string;
 
   position: number;
 
+  @IsBoolean()
+  @IsOptional()
+  outstand: boolean;
+
+  @IsOptional()
+  @IsString()
   status: string;
   
   @IsOptional()

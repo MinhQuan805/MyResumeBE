@@ -10,7 +10,7 @@ export class Product {
   @Prop()
   title: string;
 
-  @Prop({default: "hidden"})
+  @Prop({default: "ongoing"})
   status: string;
 
   @Prop()
@@ -23,7 +23,10 @@ export class Product {
   thumbnail: string;
 
   @Prop({default: ""})
-  shortDescription
+  shortDescription: string;
+
+  @Prop({default: false})
+  outstand: boolean;
 
   @Prop()
   introduction: string;

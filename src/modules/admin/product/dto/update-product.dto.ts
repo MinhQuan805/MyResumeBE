@@ -29,8 +29,8 @@ export class UpdateProductDto {
   @IsNotEmpty()
   introduction: string;
 
-  @IsArray()
-  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
   content: string;
 
   @IsString()
@@ -45,6 +45,10 @@ export class UpdateProductDto {
   @IsOptional()
   deleted: boolean;
 
+  @IsBoolean()
+  @IsOptional()
+  outstand: boolean;
+  
   @IsString()
   @IsOptional()
   slug: string;
