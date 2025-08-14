@@ -15,21 +15,37 @@ export class CreateProductDto {
 
   status: string;
   
-  // @IsOptional()
-  // @IsString()
-  // shortDescription
+  @IsOptional()
+  @IsString()
+  shortDescription
 
   @IsString()
   @IsNotEmpty()
   introduction: string;
 
-  @IsArray()
-  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
   content: string;
 
+  @IsString()
+  @IsOptional()
   github: string;
 
+  @IsString()
+  @IsOptional()
   website: string;
 
-  tags: string[];
+  @IsString()
+  @IsOptional()
+  video
+
+  slug: string;
+    
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  createdAt: Date;
+
+  updatedAt: Date;
+  deletedAt: Date;
 }

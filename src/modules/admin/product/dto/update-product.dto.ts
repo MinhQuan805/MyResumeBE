@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsArray, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsArray, IsOptional, IsBoolean, IsDate, IsNumber } from 'class-validator';
 
 export class UpdateProductDto {
   @IsString()
@@ -16,8 +17,12 @@ export class UpdateProductDto {
   @IsString()
   thumbnail: string;
 
+  @IsNumber()
+  @IsOptional()
   position: number;
 
+  @IsString()
+  @IsOptional()
   status: string;
   
   @IsString()
@@ -28,9 +33,32 @@ export class UpdateProductDto {
   @IsNotEmpty()
   content: string;
 
+  @IsString()
+  @IsOptional()
   github: string;
 
+  @IsString()
+  @IsOptional()
   website: string;
 
-  tags: string[];
+  @IsBoolean()
+  @IsOptional()
+  deleted: boolean;
+
+  @IsString()
+  @IsOptional()
+  slug: string;
+
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  createdAt: Date;
+
+  @IsDate()
+  @IsOptional()
+  updatedAt: Date;
+
+  @IsDate()
+  @IsOptional()
+  deletedAt: Date;
 }

@@ -37,6 +37,7 @@ export class CreateArticleDto {
 
   deleted: boolean;
   slug: string;
+  
   @IsDate()
   @IsOptional()
   @Type(() => Date)

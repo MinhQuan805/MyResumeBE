@@ -22,19 +22,14 @@ export class Product {
   @Prop({default: ""})
   thumbnail: string;
 
-  // @Prop({default: ""})
-  // shortDescription
-  
+  @Prop({default: ""})
+  shortDescription
+
   @Prop()
   introduction: string;
 
   @Prop()
-  content: {
-    index: number;
-    title: string;
-    content: string;
-  }[];
-
+  content: string
 
   @Prop({default: ""})
   github: string;
@@ -49,11 +44,7 @@ export class Product {
   slug: string;
 
   @Prop({default: ""})
-  video: {
-    url: string;
-    thumbnail: string;
-  }[];
-
+  video: string;
 
   @Prop({ default: false })
   deleted: boolean;
